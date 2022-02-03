@@ -14,21 +14,21 @@ def putToOpenHAB(item, itemData):
                                    allow_redirects=True)
 
 
-def Main():
-    jsonTokenResponse = requests.get('https://data.tankutility.com/api/getToken',
-                                     auth=HTTPBasicAuth(TankUser, TankPassword)).json()
-    jsonDeviceResponse = requests.get(
-        'https://data.tankutility.com/api/devices?token=' + jsonTokenResponse[
+def get_tank_level():
+    json_token_response = requests.get('https://data.tankutility.com/api/getToken',
+                                       auth=HTTPBasicAuth(TankUser, TankPassword)).json()
+    json_device_response = requests.get(
+        'https://data.tankutility.com/api/devices?token=' + json_token_response[
             "token"]).json()
     # below is querying the first tank in the account - adjust the [0] if you want other tanks
-    jsonTankDataResponse = requests.get(
-        'https://data.tankutility.com/api/devices/' + jsonDeviceResponse["devices"][
-            0] + '?token=' + jsonTokenResponse["token"]).json()
+    json_tank_data_response = requests.get(
+        'https://data.tankutility.com/api/devices/' + json_device_response["devices"][
+            0] + '?token=' + json_token_response["token"]).json()
 
-    print(jsonTankDataResponse["device"]["lastReading"]["tank"])
+    print(json_tank_data_response["device"]["lastReading"]["tank"])
 
-    putToOpenHAB('TankLevel', jsonTankDataResponse["device"]["lastReading"]["tank"])
+    putToOpenHAB('TankLevel', json_tank_data_response["device"]["lastReading"]["tank"])
 
 
 if __name__ == '__main__':
-    Main()
+    get_tank_level()
