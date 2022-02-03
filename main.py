@@ -1,17 +1,8 @@
 import requests
 from requests.auth import HTTPBasicAuth
 
-# change these appropriately
-openHABHostAndPort = 'http://192.168.1.216:8080'
 TankUser = 'user@email'
 TankPassword = 'password'
-
-
-def putToOpenHAB(item, itemData):
-    ItemURL = openHABHostAndPort + '/rest/items/' + item + '/state'
-    OpenHABResponse = requests.put(ItemURL,
-                                   data=str(itemData).encode('utf-8'),
-                                   allow_redirects=True)
 
 
 def get_tank_level():
@@ -26,8 +17,6 @@ def get_tank_level():
             0] + '?token=' + json_token_response["token"]).json()
 
     print(json_tank_data_response["device"]["lastReading"]["tank"])
-
-    putToOpenHAB('TankLevel', json_tank_data_response["device"]["lastReading"]["tank"])
 
 
 if __name__ == '__main__':
