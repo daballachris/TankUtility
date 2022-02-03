@@ -1,8 +1,14 @@
 import requests
+import configparser
 from requests.auth import HTTPBasicAuth
 
-TankUser = 'user@email'
-TankPassword = 'password'
+# Read user configuration data from configuration.ini
+config = configparser.ConfigParser()
+file_name = 'configuration.ini'
+config.read(file_name)
+
+TankUser = config['SECURITY']['TankUser']
+TankPassword = config['SECURITY']['TankPassword']
 
 
 def get_tank_level():
