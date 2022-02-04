@@ -28,11 +28,11 @@ def http_get(url, user=None, password=None):
 
     response = ""
     try:
-        data = s.recv(CHUNK_SIZE)
-        response += data.decode()
-        while len(data) > 0:
+        while True:
             data = s.recv(CHUNK_SIZE)
             response += data.decode()
+            if len(data) == 0:
+                break
     except:  # Exception is different on device (socket.timeout in Python), just catching them all.
         pass
 
