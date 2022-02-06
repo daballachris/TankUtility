@@ -53,9 +53,14 @@ def get_tank_level():
                                                   + json_device_response["devices"][0]
                                                   + '?token=' + json_token_response["token"]))
 
+    tank_reading_level = json_tank_data_response["device"]["lastReading"]["tank"]
+    tank_reading_temperature = json_tank_data_response["device"]["lastReading"]["temperature"]
+    tank_reading_time_iso = json_tank_data_response["device"]["lastReading"]["time_iso"]
+
     print("*" * 25)
-    print("Tank Level:", json_tank_data_response["device"]["lastReading"]["tank"])
-    print("Temperature:", json_tank_data_response["device"]["lastReading"]["temperature"])
+    print("Tank Level:", tank_reading_level)
+    print("Temperature:", tank_reading_temperature)
+    print("Time:", tank_reading_time_iso)
 
 
 if __name__ == '__main__':
